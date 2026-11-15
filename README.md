@@ -1,15 +1,14 @@
 # Afterglow
 
-Original Aspect-inspired AI social website. Not affiliated with Aspect and does not copy its branding or assets. Features: personal AI feed, comments, generated character posts, adult character creation, separate character DMs, optional device-local persistence, and deletion controls. No image generation, autonomous background activity, user accounts, shared database, or cross-device sync.
+Original AI social app with character discovery, personal feed, comments, custom adult characters, and character DMs. Not affiliated with Aspect or Candy AI. Abstract CSS portraits are illustrative placeholders, not generated photos.
 
-## Status
-Initial implementation, not browser-tested or deployed by this commit. Uses WebLLM 0.2.79 from esm.run and Llama-3.2-1B-Instruct-q4f16_1-MLC. Verify dependency availability, model compatibility, and runtime behavior before launch. The general-purpose model may refuse adult requests. No promise of completely uncensored output.
+## Accounts and privacy
+Supabase email/password signup/login, session persistence, and user_worlds storage are integrated. Only the public publishable key is in browser code; no service-role key. The user_worlds table has forced RLS with owner-only SELECT/INSERT/UPDATE/DELETE policies. Signup may require email confirmation. Verify email delivery, templates, Auth Site URL and redirect allowlist for https://private-ai-chat-three.vercel.app in the Supabase dashboard before announcing registration works end-to-end. Default email service limits apply. Password recovery and account deletion are not implemented.
 
-## Hosting
-Static files can be served over HTTPS. Repository creation and code commits do not publish a site. Choose a host whose current acceptable-use policy permits your intended content. Review GitHub adult-content and Pages restrictions before considering Pages for an adult-oriented site. Hosting, CDN, and model distribution have limits and terms; unlimited free service is not guaranteed. No paid inference API is included; visitors supply compute, memory, bandwidth, and electricity.
+Worlds hold characters, posts, and chats in one JSON record with a 2 MB cap; concurrent updates are last-write-wins. Existing anonymous localStorage chats are not migrated. Sessions persist in browser storage; users should sign out on shared devices. Account-private is not end-to-end encrypted; administrators and relevant infrastructure retain their access. Third-party SDK/CDN/fonts are trust and metadata dependencies. No paid services enabled by this code.
 
-## Privacy
-Messages, feed posts, and characters stay in page memory unless local saving is enabled. This implementation intentionally sends no chat content to an inference server. Saved worlds use unencrypted localStorage, with no account separation within a shared browser profile. Other sites on the same origin, extensions, third-party dependencies, or a compromised device can affect privacy. Hosting/CDN/model hosts receive network metadata. Public repository source does not contain visitor conversations. Deletion clears app storage, not backups or forensic traces. Audit and self-host dependencies for stronger assurance.
+## AI and media
+Text inference uses WebLLM 0.2.79 and Llama-3.2-1B-Instruct-q4f16_1-MLC on visitors' devices. Compatible WebGPU hardware/browser, memory, and bandwidth are required. Model availability and browser runtime need testing. Model output is not guaranteed uncensored. Image/video generation is explicitly unavailable, with no paid fallback.
 
-## Adult content and safety
-The entry screen is an 18+ self-attestation, not identity verification or a guarantee of legal compliance. Characters must have adult ages. The system prompt prohibits sexual content involving minors and non-consensual sexual activity; prompts are not reliable moderation enforcement. Public adult services may require additional jurisdiction-specific safeguards. No image uploads or explicit media assets are included.
+## Verification status
+Supabase migration applied successfully and security advisor returned no warnings before this commit. Full two-user isolation tests, browser tests, model-load tests, email-confirmation flow, and mobile tests have not been completed. Database policies alone do not constitute a full security audit. Configure Auth redirect URLs and production email delivery as appropriate. Signup age declaration and adult character age validation are not verified age assurance. Review adult-content hosting and legal requirements before public operation.
